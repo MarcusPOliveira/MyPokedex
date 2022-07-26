@@ -1,23 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { Load } from '../../components/Load';
+import { FlatList } from 'react-native';
 
 import api from '../../services/api';
+import { Load } from '../../components/Load';
+import {
+  Card,
+  Pokemon,
+  PokemonType
+} from '../../components/Card';
 import {
   Container,
   Title
 } from './styles';
-
-//Pokemon pode ter 2 tipos, exemplo: butterfree é inseto e voador
-type PokemonType = {
-  type: string;
-}
-
-type Pokemon = {
-  name: string;
-  url: string;
-  id: number;
-  types: PokemonType[];
-}
 
 type Request = {
   id: number;
@@ -64,7 +58,16 @@ export function Home() {
 
   return (
     <Container>
-      {pokemons.map(item => <Title>{item.name}</Title>)}
+      <FlatList
+        data={pokemons}
+        keyExtractor={pokemon => pokemon.id.toString()}
+        showsVerticalScrollIndicator={false}
+        renderItem={({ item: pokemon }) => (
+          <Card
+            data={pokemon}
+          />
+        )}
+      />
     </Container>
   );
 }
