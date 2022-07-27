@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList } from 'react-native';
 
+import pokeballImg from '../../assets/img/pokeball.png';
 import api from '../../services/api';
 import { Load } from '../../components/Load';
 import {
@@ -10,8 +11,11 @@ import {
 } from '../../components/Card';
 import {
   Container,
-  Title
+  Header,
+  Title,
+  PokeballBackgroundImg
 } from './styles';
+import { useNavigation } from '@react-navigation/native';
 
 type Request = {
   id: number;
@@ -21,6 +25,12 @@ type Request = {
 export function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [pokemons, setPokemons] = useState<Pokemon[]>([]);
+
+  const navigation = useNavigation();
+
+  function handleOpenDetails(pokemonId: number) {
+    navigation.navigate('details', { pokemonId });
+  }
 
   async function getMoreInfo(url: string): Promise<Request> {
     const response = await api.get(url);
@@ -58,14 +68,17 @@ export function Home() {
 
   return (
     <Container>
+      <Header>
+        <PokeballBackgroundImg source={pokeballImg} resizeMode="contain" />
+        <Title>Pokedéx</Title>
+      </Header>
       <FlatList
         data={pokemons}
         keyExtractor={pokemon => pokemon.id.toString()}
         showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingHorizontal: 20 }}
         renderItem={({ item: pokemon }) => (
-          <Card
-            data={pokemon}
-          />
+          <Card data={pokemon} onPress={() => handleOpenDetails(pokemon.id)} />
         )}
       />
     </Container>

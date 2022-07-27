@@ -3,14 +3,13 @@ import { StatusBar } from 'react-native';
 import { ThemeProvider } from 'styled-components';
 
 import theme from './src/styles/theme';
-import { Welcome } from './src/screens/Welcome';
-import { Home } from './src/screens/Home';
+import { Routes } from './src/routes';
 
 export default function App() {
   return (
     <ThemeProvider theme={theme} >
-      <StatusBar translucent barStyle='light-content' />
-      <Home />
+      <StatusBar translucent barStyle='dark-content' backgroundColor="transparent" />
+      <Routes />
     </ThemeProvider>
   );
 }
