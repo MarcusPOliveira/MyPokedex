@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import pokeballImg from '../../assets/img/pokeball.png';
 import api from '../../services/api';
@@ -15,7 +16,6 @@ import {
   Title,
   PokeballBackgroundImg
 } from './styles';
-import { useNavigation } from '@react-navigation/native';
 
 type Request = {
   id: number;
